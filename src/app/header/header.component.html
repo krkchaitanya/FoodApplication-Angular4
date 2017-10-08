@@ -3,11 +3,24 @@
     <div class="navbar-header">
       <a href="#" class="navbar-brand">Recipie Book</a>"
     </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" (click)="onSelect('recipe')">Recipes</a></li>
-      <li><a href="#" (click)="onSelect('shopping-list')">Shopping-list</a></li>
-            <li><a href="#">Save Data</a></li>
-            <li><a href="#">Fetcing Data</a></li>
-    </ul>
+     <div class="collapse navbar-collapse">
+       <ul class="nav navbar-nav">
+         <li><a href="#" (click)="onSelect('recipe')">Recipes</a></li>
+         <li><a href="#" (click)="onSelect('shopping-list')">shopping-list</a></li>
+       </ul>
+       <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown" appDropdown>
+           <a href="#" class="dropdown-toggle" role="button">Manage<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li>
+                <a href="#">SaveData</a>
+             </li>
+             <li>
+               <a href="#">FetchData</a>
+             </li>
+           </ul>
+         </li>
+       </ul>
+     </div>
   </div>
 </nav>
