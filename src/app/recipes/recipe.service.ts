@@ -1,35 +1,37 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class RecipeService {
-recipesChanged=new Subject<Recipe[]>();
+  recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
+  recipes: Recipe[] = [
     new Recipe(
-      'Tasty EggBread',
-      'A super-tasty Vegbread - just awesome!',
-      'http://www.seriouseats.com/recipes/assets_c/2016/05/20160503-fava-carrot-ricotta-salad-recipe-1-thumb-1500xauto-431710.jpg',
+      'Tasty Schnitzel',
+      'A super-tasty Schnitzel - just awesome!',
+      'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
       [
         new Ingredient('Meat', 1),
         new Ingredient('French Fries', 20)
       ]),
-    new Recipe('Big Veg Mix',
+    new Recipe('Big Fat Burger',
       'What else you need to say?',
-      'https://static01.nyt.com/images/2016/08/22/dining/22COOKING-KOREAN-RICE-CAKES2/22COOKING-KOREAN-RICE-CAKES2-videoSixteenByNineJumbo1600.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg',
       [
         new Ingredient('Buns', 2),
         new Ingredient('Meat', 1)
       ])
   ];
-
   constructor(private slService: ShoppingListService) {}
 
-  getRecipes() {
-    return this.recipes.slice();
+  setRecipes(recipes: Recipe[]) {
+    console.log(recipes);
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   getRecipe(index: number) {
@@ -40,19 +42,24 @@ recipesChanged=new Subject<Recipe[]>();
     this.slService.addIngredients(ingredients);
   }
 
-  addRecipe(recipe:Recipe){
+  addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
+    console.log("after adding recipes",this.recipes);
     this.recipesChanged.next(this.recipes.slice());
   }
 
- updateRecipe(index:number,newRecipe:Recipe){
-   this.recipes[index]=newRecipe;
-   this.recipesChanged.next(this.recipes.slice());
- }
+  getRecipes() {
+    console.log("getting recipes",this.recipes.slice());
+    return this.recipes.slice();
+  }
 
-  deleteRecipe(index:number){
-    this.recipes.splice(index,1);
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
     this.recipesChanged.next(this.recipes.slice());
- }
-    
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
 }
