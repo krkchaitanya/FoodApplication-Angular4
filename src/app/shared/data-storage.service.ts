@@ -11,11 +11,11 @@ export class DataStorageService {
 
  storeRecipes(){
    console.log("store recipes fun from data.storage service", this.recipeService.getRecipes());
-    return this.http.put("https://foodapp-610f6.firebaseio.com/recipes.json", this.recipeService.getRecipes());
+    return this.http.put("https://angularapp-4c6ba.firebaseio.com/recipes.json", this.recipeService.getRecipes());
  };
 
  getRecipes(){
-   this.http.get('https://foodapp-610f6.firebaseio.com/recipes.json')
+   this.http.get('https://angularapp-4c6ba.firebaseio.com/recipes.json')
    .subscribe(
      (response:Response)=>{
        const recipes:Recipe[]=response.json();
